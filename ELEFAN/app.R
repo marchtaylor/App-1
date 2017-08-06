@@ -7,7 +7,7 @@ ui <- fluidPage(
   headerPanel(title = "ELEFAN_GA"),
   
   sidebarPanel(
-    submitButton("Start Genetic Algorithm"),
+    submitButton("Re-start Genetic Algorithm"),
     numericInput(
       inputId = "seasonalized",
       label = "Seasonalized VBGF (TRUE=1, FALSE=0)",
@@ -17,7 +17,7 @@ ui <- fluidPage(
     sliderInput(
       inputId = "MA",
       label = "Moving average (MA) span",
-      value = 5, min = 5, max = length(dat$midLengths)/4, round = TRUE,
+      value = 5, min = 5, max = length(dat$midLengths)/2, round = TRUE,
       step = 2
     ),
     
@@ -95,7 +95,7 @@ server <- function(input, output) {
       x=dat, seasonalised = input$seasonalized, parallel = FALSE,
       low_par = list(Linf=input$Linf[1], K=input$K[1], t_anchor=input$t_anchor[1], C=input$C[1], ts=input$ts[1]),
       up_par = list(Linf=input$Linf[2], K=input$K[2], t_anchor=input$t_anchor[2], C=input$C[2], ts=input$ts[2]),
-      popSize=input$popSize, maxiter=input$maxiter, run = input$run, plot.score = TRUE
+      popSize=input$popSize, maxiter=input$maxiter, run = input$run, plot.score = FALSE
     )
   }) 
 
@@ -125,4 +125,3 @@ server <- function(input, output) {
 
 
 shinyApp(ui = ui, server = server)
-
